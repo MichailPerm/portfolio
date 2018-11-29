@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
 import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout } from '../actions/';
-import { Header } from '../components/header';
+import Header from '../components/header';
 import News from '../components/news.js';
 import Admin from '../components/admin.js';
 import Login from '../components/login.js';
