@@ -3,9 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-import { fetchNewsFromServer } from '../actions/';
+import { fetchNewsFromServer, postNews } from '../actions/';
 import { Header } from '../components/header';
 import News from '../components/news.js';
+import Admin from '../components/admin.js';
 
 class App extends React.Component {
     componentDidMount() {
@@ -15,7 +16,7 @@ class App extends React.Component {
     render () {
         return (
             <div>
-                <Header/>
+                <Header fetchNewsFromServer={this.props.fetchNewsFromServer}/>
                 <Route exact path="/" render={() => (
                     this.props.newsFetching ? (
                         <h4>News Loading</h4>
@@ -30,6 +31,10 @@ class App extends React.Component {
                 <Route path="/newsGet" render={props => (
                     <News {...props}
                         News={this.props.News}/>
+                )}/>
+                <Route path="/admin" render={props => (
+                    <Admin {...props}
+                        postNews={this.props.postNews}/>
                 )}/>
             </div>
         );
@@ -46,7 +51,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchNewsFromServer: () => dispatch(fetchNewsFromServer())
+        fetchNewsFromServer: () => dispatch(fetchNewsFromServer()),
+        postNews: (newAuthor, newTitle, newText) => dispatch(postNews(newAuthor, newTitle, newText))
     };
 };
 

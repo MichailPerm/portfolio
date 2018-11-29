@@ -5,6 +5,7 @@ export const config = {
         'port': '5000'
     },
     'pages': {
-        'news': '/news'
+        'news': '/news',
+        'post': '/post'
     }
 };
