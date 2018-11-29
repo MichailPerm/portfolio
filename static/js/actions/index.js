@@ -2,6 +2,7 @@ import { config } from '../../config';
 
 const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
 const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
+const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
 
 export const newsFetching = (bool) => {
     return {
@@ -39,7 +40,6 @@ export const fetchNewsFromServer = () => {
 };
 
 export const postNews = (newAuthor, newTitle, newText) => {
-    console.log(newAuthor.value, newText.value, newTitle.value);
     return () => {
         fetch(post_url, {
             method: 'POST',
@@ -52,5 +52,30 @@ export const postNews = (newAuthor, newTitle, newText) => {
                 text: newText.value
             })
         });
+    };
+};
+
+export const sendAuthRequest = (login, pass) => {
+    return (dispatch) => {
+        fetch(login_url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                login: login.value,
+                pass: pass.value
+            })
+        })
+            .then(res => res.json())
+            .then(token => dispatch(setToken(token)))
+            .catch(() => dispatch(setToken(null)));
+    };
+};
+
+export const setToken = (token) => {
+    return {
+        type: 'SET_TOKEN',
+        token
     };
 };

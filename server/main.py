@@ -26,6 +26,28 @@ class News(db.Model):
         date_string = self.date.strftime("%d.%M.%y")
         return '{"id": %r, "title": %r, "text": %r, "author": %r, "date": %r}' % (self.id, self.title, self.text, self.author, date_string)
 
+
+class User(db.Model):
+
+    # Юзер будет один, так что ему не будут ни роли, ничего другого. Допуск только у него. Расширения не планируется
+
+    __tablename__ = 'Users'
+
+    id = db.Column(db.Integer, primary_key = True)
+    fio = db.Column(db.String(120), nullable = False)
+    login = db.Column(db.String(80), nullable = False)
+    password = db.Column(db.String(80), nullable = False)
+    token = db.Column(db.String(80), nullable = False)
+    date = db.Column(db.Date)
+    phone = db.Column(db.String(20))
+    email = db.Column(db.String(20))
+
+    def __repr__(self):
+        # date_string = self.date.strftime("%d.%M.%y")
+        return '{"id": %r, "fio": %r, "login": %r, "password": %r, "token": %r, "phone": %r, "email": %r }' % (
+            self.id, self.fio, self.login, self.password, self.token, self.phone, self.email)
+
+
 @app.route("/favicon.ico")
 def favicon():
     print(app.root_path)
@@ -42,6 +64,10 @@ def requestNews():
 
 @app.route("/newsGet")
 def backToIndex():
+    return render_template("index.html")
+
+@app.route("/setLogin")
+def backFromLogin():
     return render_template("index.html")
 
 @app.route("/admin")
@@ -61,6 +87,14 @@ def addNews():
     db.session.add(new_record)
     db.session.commit()
     return "Ok"
+
+@app.route("/login", methods=['POST'])
+def LogIn():
+    login_dict = request.get_json()
+    account = User.query.filter(User.login==login_dict['login']).filter(User.password==login_dict['pass']).all()
+    if not account:
+        return jsonify({"token": "false"})
+    return jsonify({"token": str(account[0].token).replace("'", "\"")})  # В реале вернется респонс с установленным в куках токеном. Клиент распарсит куки и получит токен. Этот токен он будет передавать в течение всех своих операций. Считаться токен будет со времени последнего логина.
 
 if __name__ == "__main__":
     app.run()

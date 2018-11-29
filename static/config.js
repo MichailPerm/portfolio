@@ -6,6 +6,7 @@ export const config = {
     },
     'pages': {
         'news': '/news',
-        'post': '/post'
+        'post': '/post',
+        'login': '/login'
     }
 };
