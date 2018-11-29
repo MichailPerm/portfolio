@@ -9,7 +9,6 @@ export const Header = (props) => {
             <Link to="/newsGet" onClick={fetchNewsFromServer}>Новости</Link>
             <Link to="/portfolio">Портфолио</Link>
             <Link to="/about">О себе</Link>
-            <Link to="/admin">Админ</Link>
         </div>
     );
 };

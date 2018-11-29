@@ -15,10 +15,26 @@ const newsError = (state=false, action) => {
     return state;
 };
 
+const token = (state='', action) => {
+    if (action.type == 'SET_TOKEN') {
+        if (action.token !== 'false') {
+            return action.token;
+        }
+        else {
+            return '';
+        }
+    }
+
+    else {
+        return state;
+    }
+};
+
 const RootReducer = combineReducers({
     News,
     newsFetching,
-    newsError
+    newsError,
+    token
 });
 
 export default RootReducer;
