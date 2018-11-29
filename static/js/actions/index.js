@@ -3,6 +3,7 @@ import { config } from '../../config';
 const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
 const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
 const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
+const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
 
 export const newsFetching = (bool) => {
     return {
@@ -79,3 +80,18 @@ export const setToken = (token) => {
         token
     };
 };
+
+export const getAbout = () => {
+    return (dispatch) => {
+        fetch(about_url, {method: 'GET'})
+            .then(res => res.json())
+            .then(about => dispatch(setAbout(about)))
+    };
+};
+
+export const setAbout = (about) => {
+    return {
+        type: 'SET_ABOUT',
+        about
+    }
+}

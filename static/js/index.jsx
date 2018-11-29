@@ -13,7 +13,8 @@ const initialState = {
     News: [],
     newsFetching: true,
     newsError: false,
-    token: ''
+    token: '',
+    about: {}
 };
 
 const store = createStore(

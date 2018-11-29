@@ -96,5 +96,13 @@ def LogIn():
         return jsonify({"token": "false"})
     return jsonify({"token": str(account[0].token).replace("'", "\"")})  # В реале вернется респонс с установленным в куках токеном. Клиент распарсит куки и получит токен. Этот токен он будет передавать в течение всех своих операций. Считаться токен будет со времени последнего логина.
 
+@app.route("/about")
+def aboutToIndex():
+    return render_template("index.html")
+
+@app.route("/portfolio")
+def portfolioToIndex():
+    return render_template("index.html")
+
 if __name__ == "__main__":
     app.run()
