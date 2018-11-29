@@ -1,6 +1,8 @@
 # main.py
+import os
+
 from datetime import date
-from flask import Flask, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
@@ -24,22 +26,41 @@ class News(db.Model):
         date_string = self.date.strftime("%d.%M.%y")
         return '{"id": %r, "title": %r, "text": %r, "author": %r, "date": %r}' % (self.id, self.title, self.text, self.author, date_string)
 
+@app.route("/favicon.ico")
+def favicon():
+    print(app.root_path)
+    return send_from_directory(os.path.join(app.root_path, '../static'), 'favicon.ico',mimetype='image/vnd.microsoft.icon')
+
 @app.route("/")
 def index():
     return render_template("index.html")
 
 @app.route("/news")
 def requestNews():
-    # Здесь должен быть запрос к БД на предмет новостей и возврат объекта в виде JSON
-    # Проверил запрос к базе. Теперь можно и делать то, что надо.
-    news = News.query.all()
-    # import pdb; pdb.set_trace()
-    # print (news)
+    news = News.query.order_by(News.id.desc()).all()
     return jsonify(str(news).replace("'", "\""))
 
 @app.route("/newsGet")
 def backToIndex():
     return render_template("index.html")
+
+@app.route("/admin")
+def adminToIndex():
+    return render_template("index.html")
+
+@app.route("/post", methods=['POST'])
+def addNews():
+    new_dict = request.get_json()
+    new_dict['date'] = date.today()
+    new_record = News(
+        author = new_dict['author'],
+        title=new_dict['title'],
+        text=new_dict['text'],
+        date=new_dict['date']
+    )
+    db.session.add(new_record)
+    db.session.commit()
+    return "Ok"
 
 if __name__ == "__main__":
     app.run()
