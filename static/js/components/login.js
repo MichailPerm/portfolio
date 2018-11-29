@@ -11,7 +11,7 @@ export const Login = (props) => {
                    placeholder='Введите логин'
                    ref={input => login = input}>
             </input>
-            <input type='pass'
+            <input type='password'
                    defaultValue={login}
                    placeholder='Введите пароль'
                    ref={input => pass = input}>

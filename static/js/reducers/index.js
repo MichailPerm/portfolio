@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import News from './News';
+import about from './about';
 
 const newsFetching = (state=false, action) => {
     if (action.type == 'NEWS_FETCHING') {
@@ -34,7 +35,8 @@ const RootReducer = combineReducers({
     News,
     newsFetching,
     newsError,
-    token
+    token,
+    about
 });
 
 export default RootReducer;

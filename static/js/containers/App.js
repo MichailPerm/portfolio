@@ -3,11 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-import { fetchNewsFromServer, postNews, sendAuthRequest } from '../actions/';
+import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout } from '../actions/';
 import { Header } from '../components/header';
 import News from '../components/news.js';
 import Admin from '../components/admin.js';
 import Login from '../components/login.js';
+import About from '../components/about';
+import Portfolio from '../components/portfolio';
 
 class App extends React.Component {
     componentDidMount() {
@@ -17,7 +19,8 @@ class App extends React.Component {
     render () {
         return (
             <div>
-                <Header fetchNewsFromServer={this.props.fetchNewsFromServer}/>
+                <Header fetchNewsFromServer={this.props.fetchNewsFromServer}
+                        getAbout={this.props.getAbout}/>
                 <Route exact path="/" render={() => (
                     this.props.newsFetching ? (
                         <h4>News Loading</h4>
@@ -49,7 +52,12 @@ class App extends React.Component {
                             sendAuthRequest={this.props.sendAuthRequest}/>   
                     )
                 )}/>
-
+                <Route path="/about" render={props => (
+                    <About {...props}/>
+                )}/>
+                <Route path="/portfolio" render={props => (
+                    <Portfolio {...props}/>
+                )}/>
             </div>
         );
     }
@@ -68,7 +76,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchNewsFromServer: () => dispatch(fetchNewsFromServer()),
         postNews: (newAuthor, newTitle, newText) => dispatch(postNews(newAuthor, newTitle, newText)),
-        sendAuthRequest: (login, pass) => dispatch(sendAuthRequest(login, pass))
+        sendAuthRequest: (login, pass) => dispatch(sendAuthRequest(login, pass)),
+        getAbout: () => dispatch(getAbout())
     };
 };
 

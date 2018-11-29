@@ -7,6 +7,8 @@ export const config = {
     'pages': {
         'news': '/news',
         'post': '/post',
-        'login': '/login'
+        'login': '/login',
+        'about': '/about',
+        'portfolio': '/portfolio'
     }
 };
