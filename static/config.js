@@ -2,7 +2,7 @@ export const config = {
     'server': {
         'protocol': 'http',
         'name': 'localhost',
-        'port': '5000'
+        'port': '8000'
     },
     'pages': {
         'news': '/news',
