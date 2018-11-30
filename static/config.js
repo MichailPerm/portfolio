@@ -1,7 +1,7 @@
 export const config = {
     'server': {
-        'protocol': 'http',
-        'name': 'localhost',
+        'protocol': 'https',
+        'name': 'frozen-basin-52657.herokuapp.com',
         'port': '8000'
     },
     'pages': {
@@ -12,3 +12,5 @@ export const config = {
         'portfolio': '/portfolio'
     }
 };
+
+// https://frozen-basin-52657.herokuapp.com/

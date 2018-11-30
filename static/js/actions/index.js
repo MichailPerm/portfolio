@@ -1,9 +1,14 @@
 import { config } from '../../config';
 
-const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
-const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
-const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
-const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
+// const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
+// const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
+// const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
+// const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
+
+const request_url = config.server.protocol+'://'+config.server.name + config.pages.news;
+const post_url = config.server.protocol+'://'+config.server.name + config.pages.post;
+const login_url = config.server.protocol+'://'+config.server.name + config.pages.login;
+const about_url = config.server.protocol+'://'+config.server.name + config.pages.about;
 
 export const newsFetching = (bool) => {
     return {
