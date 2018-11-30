@@ -8,7 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://odoo8:test@localhost/portfolio'
+if os.environ.get('DATABASE_URL') is None:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://odoo8:test@localhost/portfolio'
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
