@@ -7,17 +7,17 @@ let about_url = '';
 let delete_url = '';
 
 if (config.config === 'devel') {
-    const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
-    const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
-    const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
-    const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
-    const delete_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.deleteNew;
+    request_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.news;
+    post_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.post;
+    login_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.login;
+    about_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.about;
+    delete_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.deleteNew;
 } else {
-    const request_url = config.server.protocol+'://'+config.server.name + config.pages.news;
-    const post_url = config.server.protocol+'://'+config.server.name + config.pages.post;
-    const login_url = config.server.protocol+'://'+config.server.name + config.pages.login;
-    const about_url = config.server.protocol+'://'+config.server.name + config.pages.about;
-    const delete_url = config.server.protocol+'://'+config.server.name + config.pages.deleteNew;
+    request_url = config.prod_server.protocol+'://'+config.prod_server.name + config.pages.news;
+    post_url = config.prod_server.protocol+'://'+config.prod_server.name + config.pages.post;
+    login_url = config.prod_server.protocol+'://'+config.prod_server.name + config.pages.login;
+    about_url = config.prod_server.protocol+'://'+config.prod_server.name + config.pages.about;
+    delete_url = config.prod_server.protocol+'://'+config.prod_server.name + config.pages.deleteNew;
 }
 
 export const newsFetching = (bool) => {
