@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 config = {
-    'mode': 'debug'
+    'mode': 'release'
 }
 
 
