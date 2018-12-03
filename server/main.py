@@ -6,7 +6,9 @@ from flask import Flask, request, render_template, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
 
-import config.config as config
+config = {
+    'mode': 'release'
+}
 
 
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
