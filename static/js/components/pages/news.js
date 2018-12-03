@@ -90,18 +90,20 @@ const Header4 = styled.h3`
 `;
 
 const DateDiv = styled.div`
-    position: inherit;
-    float: inherit;
-    left: 5%;
-    bottom: 25px;
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    float: left;
+    width: fit-content;
     display: block;
 `;
 
 const AnnotDiv = styled.div`
     position: inherit;
-    float: inherit;
-    right: 5%;
-    padding: 10px;
+    right: 10px;
+    bottom: 5px;
+    width: fit-content;
+    margin-left: auto;
     display: block;
 `;
 
