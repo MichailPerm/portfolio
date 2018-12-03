@@ -1,14 +1,24 @@
 import { config } from '../../config';
 
-// const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
-// const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
-// const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
-// const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
+let request_url = '';
+let post_url = '';
+let login_url = '';
+let about_url = '';
+let delete_url = '';
 
-const request_url = config.server.protocol+'://'+config.server.name + config.pages.news;
-const post_url = config.server.protocol+'://'+config.server.name + config.pages.post;
-const login_url = config.server.protocol+'://'+config.server.name + config.pages.login;
-const about_url = config.server.protocol+'://'+config.server.name + config.pages.about;
+if (config.config === 'devel') {
+    const request_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.news;
+    const post_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.post;
+    const login_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.login;
+    const about_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.about;
+    const delete_url = config.server.protocol+'://'+config.server.name+':'+config.server.port + config.pages.deleteNew;
+} else {
+    const request_url = config.server.protocol+'://'+config.server.name + config.pages.news;
+    const post_url = config.server.protocol+'://'+config.server.name + config.pages.post;
+    const login_url = config.server.protocol+'://'+config.server.name + config.pages.login;
+    const about_url = config.server.protocol+'://'+config.server.name + config.pages.about;
+    const delete_url = config.server.protocol+'://'+config.server.name + config.pages.deleteNew;
+}
 
 export const newsFetching = (bool) => {
     return {
@@ -46,7 +56,7 @@ export const fetchNewsFromServer = () => {
 };
 
 export const postNews = (newAuthor, newTitle, newText) => {
-    return () => {
+    return (dispatch) => {
         fetch(post_url, {
             method: 'POST',
             headers: {
@@ -57,7 +67,8 @@ export const postNews = (newAuthor, newTitle, newText) => {
                 title: newTitle.value,
                 text: newText.value
             })
-        });
+        })
+            .then(dispatch(fetchNewsFromServer()));
     };
 };
 
@@ -98,5 +109,20 @@ export const setAbout = (about) => {
     return {
         type: 'SET_ABOUT',
         about
-    }
-}
+    };
+};
+
+export const deleteNew = (idx) => {
+    return (dispatch) => {
+        fetch(delete_url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idx: idx, 
+            })
+        })
+            .then(() => dispatch(fetchNewsFromServer()));
+    };
+};
