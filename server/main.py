@@ -5,13 +5,17 @@ from datetime import date
 from flask import Flask, request, render_template, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 
+
+from config import config
+
+
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
-if os.environ.get('DATABASE_URL') is None:
+if config['mode'] == 'debug':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://odoo8:test@localhost/portfolio'
 else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://uhdtsnrlhzdtzq:c4436192a460488ad0b6feab11420a3d99150df43dfb5c8bd34c869300036b34@ec2-54-204-40-248.compute-1.amazonaws.com:5432/ddqcnj9cogkr1j'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
@@ -77,6 +81,14 @@ def backFromLogin():
 def adminToIndex():
     return render_template("index.html")
 
+@app.route("/addNew")
+def addNewToIndex():
+    return render_template("index.html")
+
+@app.route("/newsList")
+def newToIndex():
+    return render_template("index.html")
+
 @app.route("/post", methods=['POST'])
 def addNews():
     new_dict = request.get_json()
@@ -107,5 +119,14 @@ def aboutToIndex():
 def portfolioToIndex():
     return render_template("index.html")
 
+@app.route("/deleteNew", methods=['DELETE'])
+def deleteNew():
+    new_dict = request.get_json()
+    new_to_delete = News.query.filter(News.id==new_dict['idx']).first()
+    db.session.delete(new_to_delete)
+    db.session.commit()
+    return "Ok"
+
 if __name__ == "__main__":
     app.run()
+    

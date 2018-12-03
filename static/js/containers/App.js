@@ -3,13 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout } from '../actions/';
-import Header from '../components/header';
-import News from '../components/news.js';
-import Admin from '../components/admin.js';
-import Login from '../components/login.js';
-import About from '../components/about';
-import Portfolio from '../components/portfolio';
+import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew } from '../actions/';
+import Header from '../components/nav/header';
+import News from '../components/pages/news.js';
+import Admin from '../components/pages/admin.js';
+import Login from '../components/pages/login.js';
+import About from '../components/pages/about';
+import Portfolio from '../components/pages/portfolio';
 
 class App extends React.Component {
     componentDidMount() {
@@ -39,7 +39,9 @@ class App extends React.Component {
                 <Route path="/admin" render={props => (
                     this.props.token ? (
                         <Admin {...props}
-                            postNews={this.props.postNews}/>
+                            postNews={this.props.postNews}
+                            deleteNew={this.props.deleteNew}
+                            News={this.props.News}/>
                     ) : (
                         <Redirect to="/setLogin"/>
                     )
@@ -77,7 +79,8 @@ const mapDispatchToProps = dispatch => {
         fetchNewsFromServer: () => dispatch(fetchNewsFromServer()),
         postNews: (newAuthor, newTitle, newText) => dispatch(postNews(newAuthor, newTitle, newText)),
         sendAuthRequest: (login, pass) => dispatch(sendAuthRequest(login, pass)),
-        getAbout: () => dispatch(getAbout())
+        getAbout: () => dispatch(getAbout()),
+        deleteNew: (newId) => dispatch(deleteNew(newId))
     };
 };
 
