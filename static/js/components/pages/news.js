@@ -79,7 +79,7 @@ const Box = styled.div`
 const Paragraph = styled.p`
     padding: 10px;
     margin-block-start: 0px;
-    margin-block-end: 10px;
+    margin-block-end: 0px;
 `;
 
 const Header4 = styled.h3`
@@ -87,6 +87,22 @@ const Header4 = styled.h3`
     color: #3c1b61;
     margin-block-start: 10px;
     margin-block-end: 5px;
+`;
+
+const DateDiv = styled.div`
+    position: inherit;
+    float: inherit;
+    left: 5%;
+    bottom: 25px;
+    display: block;
+`;
+
+const AnnotDiv = styled.div`
+    position: inherit;
+    float: inherit;
+    right: 5%;
+    padding: 10px;
+    display: block;
 `;
 
 const News = (props) => {
@@ -98,6 +114,8 @@ const News = (props) => {
                 <Box key = {newsElement.id}>
                     <Header4>{newsElement.title}</Header4>
                     <Paragraph>{newsElement.text}</Paragraph>
+                    <AnnotDiv>{newsElement.author}</AnnotDiv>
+                    <DateDiv>{newsElement.date}</DateDiv>
                 </Box>
             )}
         </div>
