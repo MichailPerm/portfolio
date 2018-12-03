@@ -100,7 +100,7 @@ const DateDiv = styled.div`
 const AnnotDiv = styled.div`
     position: inherit;
     float: inherit;
-    left: 70%;
+    right: 5%;
     padding: 10px;
     display: block;
 `;
