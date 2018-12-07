@@ -9,6 +9,17 @@ const newsFetching = (state=false, action) => {
     return state;
 };
 
+const token = (state='', action) => {
+    switch (action.type) {
+        case 'SET_TOKEN':
+            return action.token.access_token;
+        case 'DROP_TOKEN':
+            return '';
+        default:
+            return state;
+    }
+};
+
 const newsError = (state=false, action) => {
     if (action.type == 'NEWS_ERROR') {
         return action.bool;
@@ -16,19 +27,11 @@ const newsError = (state=false, action) => {
     return state;
 };
 
-const token = (state='', action) => {
-    if (action.type == 'SET_TOKEN') {
-        if (action.token !== 'false') {
-            return action.token;
-        }
-        else {
-            return '';
-        }
+const tokenError = (state='', action) => {
+    if (action.type == 'ERR_TOKEN') {
+        return '';
     }
-
-    else {
-        return state;
-    }
+    return state;
 };
 
 const RootReducer = combineReducers({
@@ -36,6 +39,7 @@ const RootReducer = combineReducers({
     newsFetching,
     newsError,
     token,
+    tokenError,
     about
 });
 

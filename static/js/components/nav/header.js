@@ -27,12 +27,22 @@ let aStyle = {
 };
 
 const Header = (props) => {
-    const { fetchNewsFromServer } = props;
+    const { fetchNewsFromServer, token, dropToken } = props;
     return (
         <Head>
             <StLink><Link style={aStyle} to="/newsGet" onClick={fetchNewsFromServer}>Новости</Link></StLink>
             <StLink><Link style={aStyle} to="/portfolio">Портфолио</Link></StLink>
             <StLink><Link style={aStyle} to="/about">О себе</Link></StLink>
+            {token ? (
+                <StLink><Link style={aStyle} to="/admin">Админ</Link></StLink>
+            ) : (
+                <div></div>
+            )}
+            {token ? (
+                <StLink><Link style={aStyle} to="/logout" onClick={dropToken}>Выход</Link></StLink>
+            ) : (
+                <div></div>
+            )}
         </Head>
     );
 };
