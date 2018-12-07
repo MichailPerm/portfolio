@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 
 
 config = {
-    'mode': 'debug'
+    'mode': ''
 }
 
 
