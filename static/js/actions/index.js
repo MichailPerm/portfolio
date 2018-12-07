@@ -85,8 +85,8 @@ export const sendAuthRequest = (login, pass) => {
             })
         })
             .then(res => res.json())
-            .then(token => dispatch(setToken(token)))
-            .catch(() => dispatch(setToken(null)));
+            .then(token => dispatch(setToken(JSON.parse(token))))
+            .catch(token => dispatch(errToken(token)));
     };
 };
 
@@ -94,6 +94,19 @@ export const setToken = (token) => {
     return {
         type: 'SET_TOKEN',
         token
+    };
+};
+
+export const errToken = (token) => {
+    return {
+        type: 'ERR_TOKEN',
+        token
+    };
+};
+
+export const dropToken = () => {
+    return {
+        type: 'DROP_TOKEN',
     };
 };
 

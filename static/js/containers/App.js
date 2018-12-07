@@ -2,8 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
+import cookie from 'react-cookies';
 
-import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew } from '../actions/';
+import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken } from '../actions/';
 import Header from '../components/nav/header';
 import News from '../components/pages/news.js';
 import Admin from '../components/pages/admin.js';
@@ -20,7 +21,9 @@ class App extends React.Component {
         return (
             <div>
                 <Header fetchNewsFromServer={this.props.fetchNewsFromServer}
-                        getAbout={this.props.getAbout}/>
+                    getAbout={this.props.getAbout}
+                    dropToken={this.props.dropToken}
+                    token={this.props.token}/>
                 <Route exact path="/" render={() => (
                     this.props.newsFetching ? (
                         <h4>News Loading</h4>
@@ -70,7 +73,7 @@ const mapStateToProps = (state) => {
         News: state.News,
         newsFetching: state.newsFetching,
         newsError: state.newsError,
-        token: state.token
+        token: state.token,
     };
 };
 
@@ -80,7 +83,8 @@ const mapDispatchToProps = dispatch => {
         postNews: (newAuthor, newTitle, newText) => dispatch(postNews(newAuthor, newTitle, newText)),
         sendAuthRequest: (login, pass) => dispatch(sendAuthRequest(login, pass)),
         getAbout: () => dispatch(getAbout()),
-        deleteNew: (newId) => dispatch(deleteNew(newId))
+        deleteNew: (newId) => dispatch(deleteNew(newId)),
+        dropToken: () => dispatch(dropToken())
     };
 };
 

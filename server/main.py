@@ -2,8 +2,12 @@
 import os
 
 from datetime import date
-from flask import Flask, request, render_template, jsonify, send_from_directory
+from flask import Flask, request, render_template, jsonify, send_from_directory, session
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 
 config = {
@@ -14,12 +18,14 @@ config = {
 app = Flask(__name__, static_folder="../static/dist", template_folder="../static")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
+app.config['JWT_SECRET_KEY'] = os.urandom(24)
 if config['mode'] == 'debug':
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://odoo8:test@localhost/portfolio'
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://uhdtsnrlhzdtzq:c4436192a460488ad0b6feab11420a3d99150df43dfb5c8bd34c869300036b34@ec2-54-204-40-248.compute-1.amazonaws.com:5432/ddqcnj9cogkr1j'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
+jwt = JWTManager(app)
 
 class News(db.Model):
 
@@ -37,8 +43,6 @@ class News(db.Model):
 
 
 class User(db.Model):
-
-    # Юзер будет один, так что ему не будут ни роли, ничего другого. Допуск только у него. Расширения не планируется
 
     __tablename__ = 'Users'
 
@@ -59,7 +63,6 @@ class User(db.Model):
 
 @app.route("/favicon.ico")
 def favicon():
-    print(app.root_path)
     return send_from_directory(os.path.join(app.root_path, '../static'), 'favicon.ico',mimetype='image/vnd.microsoft.icon')
 
 @app.route("/")
@@ -109,9 +112,11 @@ def addNews():
 def LogIn():
     login_dict = request.get_json()
     account = User.query.filter(User.login==login_dict['login']).filter(User.password==login_dict['pass']).all()
-    if not account:
-        return jsonify({"token": "false"})
-    return jsonify({"token": str(account[0].token).replace("'", "\"")})  # В реале вернется респонс с установленным в куках токеном. Клиент распарсит куки и получит токен. Этот токен он будет передавать в течение всех своих операций. Считаться токен будет со времени последнего логина.
+    if account:
+        access_token = create_access_token(identity=account[0].login)
+        return jsonify(str({"access_token": access_token}).replace("'", "\""))
+    else:
+        return jsonify({"msg": "Bad login data"})
 
 @app.route("/about")
 def aboutToIndex():
