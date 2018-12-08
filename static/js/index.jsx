@@ -15,7 +15,6 @@ const initialState = {
     newsError: false,
     about: {},
     account: {},
-    token: ''
 };
 
 const store = createStore(

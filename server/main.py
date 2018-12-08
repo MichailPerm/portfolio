@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 
 
 config = {
-    'mode': 'debug'
+    'mode': 'release'
 }
 
 
@@ -114,7 +114,10 @@ def LogIn():
     account = User.query.filter(User.login==login_dict['login']).filter(User.password==login_dict['pass']).all()
     if account:
         access_token = create_access_token(identity=account[0].login)
-        return jsonify(str({"access_token": access_token}).replace("'", "\""))
+        return jsonify(str({
+            "access_token": access_token,
+            "fio": account[0].fio
+        }).replace("'", "\""))
     else:
         return jsonify({"msg": "Bad login data"})
 

@@ -10,6 +10,7 @@ import Admin from '../components/pages/admin.js';
 import Login from '../components/pages/login.js';
 import About from '../components/pages/about';
 import Portfolio from '../components/pages/portfolio';
+import { account } from '../reducers/account';
 
 class App extends React.Component {
     componentDidMount() {
@@ -22,7 +23,7 @@ class App extends React.Component {
                 <Header fetchNewsFromServer={this.props.fetchNewsFromServer}
                     getAbout={this.props.getAbout}
                     dropToken={this.props.dropToken}
-                    token={this.props.token}/>
+                    token={this.props.account.access_token}/>
                 <Route exact path="/" render={() => (
                     this.props.newsFetching ? (
                         <h4>News Loading</h4>
@@ -39,17 +40,18 @@ class App extends React.Component {
                         News={this.props.News}/>
                 )}/>
                 <Route path="/admin" render={props => (
-                    this.props.token ? (
+                    this.props.account.access_token ? (
                         <Admin {...props}
                             postNews={this.props.postNews}
                             deleteNew={this.props.deleteNew}
-                            News={this.props.News}/>
+                            News={this.props.News}
+                            account={this.props.account}/>
                     ) : (
                         <Redirect to="/setLogin"/>
                     )
                 )}/>
                 <Route path="/setLogin" render={props => (
-                    this.props.token ? (
+                    this.props.account.access_token ? (
                         <Redirect to="/admin"/>
                     ) : (
                         <Login {...props}
@@ -72,7 +74,7 @@ const mapStateToProps = (state) => {
         News: state.News,
         newsFetching: state.newsFetching,
         newsError: state.newsError,
-        token: state.token,
+        account: state.account,
     };
 };
 
