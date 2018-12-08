@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom';
 import News from './news';
 
 const Admin = (props) => {
-    const { postNews, News, deleteNew } = props;
+    const { postNews, News, deleteNew, account } = props;
     let newAuthor = '';
     let newTitle = '';
     let newText = '';
@@ -12,7 +12,8 @@ const Admin = (props) => {
             <p>
                 <input type="text" 
                        placeholder="Автор"
-                       defaultValue={ newAuthor }
+                       value={ account.fio }
+                       readOnly
                        ref={(input) => newAuthor = input}/>
             </p>
             <p>
@@ -22,8 +23,10 @@ const Admin = (props) => {
                        ref={(input) => newTitle = input}/>
             </p>
             <p>
-                <input type="text" 
+                <textarea type="text" 
                        placeholder="Сообщение"
+                       cols="100"
+                       rows="30"
                        defaultValue={ newText }
                        ref={(input) => newText = input}/>
             </p>

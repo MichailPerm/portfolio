@@ -6,7 +6,7 @@ let login_url = '';
 let about_url = '';
 let delete_url = '';
 
-if (config.config === 'devel') {
+if (config.config === 'debug') {
     request_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.news;
     post_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.post;
     login_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.login;
@@ -56,7 +56,17 @@ export const fetchNewsFromServer = () => {
 };
 
 export const postNews = (newAuthor, newTitle, newText) => {
+    let htmlRegexp = /<[^>]+>/g;
+
+    let titleCheck = newTitle.value.match(htmlRegexp);
+    let textCheck = newText.value.match(htmlRegexp);
     return (dispatch) => {
+
+        if ((titleCheck != null) || (textCheck != null)) {
+            dispatch(postNewError());
+            return;
+        }
+
         fetch(post_url, {
             method: 'POST',
             headers: {
@@ -69,6 +79,12 @@ export const postNews = (newAuthor, newTitle, newText) => {
             })
         })
             .then(dispatch(fetchNewsFromServer()));
+    };
+};
+
+export const postNewError = () => {
+    return {
+        type: 'NEW_POST_ERROR'
     };
 };
 
@@ -85,28 +101,28 @@ export const sendAuthRequest = (login, pass) => {
             })
         })
             .then(res => res.json())
-            .then(token => dispatch(setToken(JSON.parse(token))))
-            .catch(token => dispatch(errToken(token)));
+            .then(account => dispatch(setToken(JSON.parse(account))))
+            .catch(account => dispatch(errToken(account)));
     };
 };
 
-export const setToken = (token) => {
+export const setToken = (account) => {
     return {
-        type: 'SET_TOKEN',
-        token
+        type: 'SET_ACCOUNT',
+        account
     };
 };
 
-export const errToken = (token) => {
+export const errToken = (account) => {
     return {
-        type: 'ERR_TOKEN',
-        token
+        type: 'ERR_ACCOUNT',
+        account
     };
 };
 
 export const dropToken = () => {
     return {
-        type: 'DROP_TOKEN',
+        type: 'DROP_ACCOUNT',
     };
 };
 

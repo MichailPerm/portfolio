@@ -14,7 +14,7 @@ const initialState = {
     newsFetching: true,
     newsError: false,
     about: {},
-    token: ''
+    account: {},
 };
 
 const store = createStore(
