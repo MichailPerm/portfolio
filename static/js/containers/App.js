@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import cookie from 'react-cookies';
 
 import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken } from '../actions/';
 import Header from '../components/nav/header';

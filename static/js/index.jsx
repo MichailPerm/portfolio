@@ -14,6 +14,7 @@ const initialState = {
     newsFetching: true,
     newsError: false,
     about: {},
+    account: {},
     token: ''
 };
 

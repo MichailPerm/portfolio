@@ -6,7 +6,7 @@ let login_url = '';
 let about_url = '';
 let delete_url = '';
 
-if (config.config === 'devel') {
+if (config.config === 'debug') {
     request_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.news;
     post_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.post;
     login_url = config.dev_server.protocol+'://'+config.dev_server.name+':'+config.dev_server.port + config.pages.login;
