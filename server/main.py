@@ -11,7 +11,7 @@ from flask_jwt_extended import (
 
 
 config = {
-    'mode': 'release'
+    'mode': 'debug'
 }
 
 
@@ -72,7 +72,14 @@ def index():
 @app.route("/news")
 def requestNews():
     news = News.query.order_by(News.id.desc()).all()
-    return jsonify(str(news).replace("'", "\""))
+    news_str = str(news)
+    news_str = news_str.replace("=\"", "='")
+    news_str = news_str.replace("\" ", "' ")
+    news_str = news_str.replace("\">", "'>")
+    news_str = news_str.replace(": '", ": \"")
+    news_str = news_str.replace("',", "\",")
+    news_str = news_str.replace("'}", "\"}")
+    return jsonify(news_str)
 
 @app.route("/newsGet")
 def backToIndex():

@@ -59,10 +59,8 @@ export const postNews = (newAuthor, newTitle, newText) => {
     let htmlRegexp = /<[^>]+>/g;
 
     let titleCheck = newTitle.value.match(htmlRegexp);
-    // let textCheck = newText.match(htmlRegexp);
     return (dispatch) => {
 
-        // if ((titleCheck != null) || (textCheck != null)) {
         if (titleCheck != null) {
             dispatch(postNewError());
             return;
