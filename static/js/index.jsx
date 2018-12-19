@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
+
+import { EditorState } from 'draft-js';
 import { createStore, applyMiddleware } from 'redux';
 
 import App from './containers/App';
@@ -15,6 +17,7 @@ const initialState = {
     newsError: false,
     about: {},
     account: {},
+    editorState: EditorState.createEmpty()
 };
 
 const store = createStore(

@@ -3,14 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
-import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken } from '../actions/';
+import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken, setEditorState } from '../actions/';
 import Header from '../components/nav/header';
 import News from '../components/pages/news.js';
 import Admin from '../components/pages/admin.js';
 import Login from '../components/pages/login.js';
 import About from '../components/pages/about';
 import Portfolio from '../components/pages/portfolio';
-import { account } from '../reducers/account';
 
 class App extends React.Component {
     componentDidMount() {
@@ -45,7 +44,9 @@ class App extends React.Component {
                             postNews={this.props.postNews}
                             deleteNew={this.props.deleteNew}
                             News={this.props.News}
-                            account={this.props.account}/>
+                            account={this.props.account}
+                            editorState={this.props.editorState}
+                            setEditorState={this.props.setEditorState}/>
                     ) : (
                         <Redirect to="/setLogin"/>
                     )
@@ -75,6 +76,7 @@ const mapStateToProps = (state) => {
         newsFetching: state.newsFetching,
         newsError: state.newsError,
         account: state.account,
+        editorState: state.editorState
     };
 };
 
@@ -85,7 +87,8 @@ const mapDispatchToProps = dispatch => {
         sendAuthRequest: (login, pass) => dispatch(sendAuthRequest(login, pass)),
         getAbout: () => dispatch(getAbout()),
         deleteNew: (newId) => dispatch(deleteNew(newId)),
-        dropToken: () => dispatch(dropToken())
+        dropToken: () => dispatch(dropToken()),
+        setEditorState: (editorState) => dispatch(setEditorState(editorState))
     };
 };
 

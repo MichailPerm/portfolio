@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Markup } from 'interweave';
 
 const Box = styled.div`
     &:before {
@@ -76,7 +77,7 @@ const Box = styled.div`
     }
 `;
 
-const Paragraph = styled.p`
+const Paragraph = styled.div`
     padding: 10px;
     margin-block-start: 0px;
     margin-block-end: 0px;
@@ -109,13 +110,12 @@ const AnnotDiv = styled.div`
 
 const News = (props) => {
     const { News } = props;
-
     return (
         <div>
-            {News.map((newsElement) => 
+            {News.map((newsElement) =>
                 <Box key = {newsElement.id}>
                     <Header4>{newsElement.title}</Header4>
-                    <Paragraph>{newsElement.text}</Paragraph>
+                    <Paragraph><Markup content={newsElement.text} /></Paragraph>
                     <AnnotDiv>{newsElement.author}</AnnotDiv>
                     <DateDiv>{newsElement.date}</DateDiv>
                 </Box>
