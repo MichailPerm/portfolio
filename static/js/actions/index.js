@@ -59,14 +59,15 @@ export const postNews = (newAuthor, newTitle, newText) => {
     let htmlRegexp = /<[^>]+>/g;
 
     let titleCheck = newTitle.value.match(htmlRegexp);
-    let textCheck = newText.value.match(htmlRegexp);
+    // let textCheck = newText.match(htmlRegexp);
     return (dispatch) => {
 
-        if ((titleCheck != null) || (textCheck != null)) {
+        // if ((titleCheck != null) || (textCheck != null)) {
+        if (titleCheck != null) {
             dispatch(postNewError());
             return;
         }
-
+        console.log(newText);
         fetch(post_url, {
             method: 'POST',
             headers: {
@@ -75,7 +76,7 @@ export const postNews = (newAuthor, newTitle, newText) => {
             body: JSON.stringify({
                 author: newAuthor.value,
                 title: newTitle.value,
-                text: newText.value
+                text: newText
             })
         })
             .then(dispatch(fetchNewsFromServer()));
@@ -130,7 +131,7 @@ export const getAbout = () => {
     return (dispatch) => {
         fetch(about_url, {method: 'GET'})
             .then(res => res.json())
-            .then(about => dispatch(setAbout(about)))
+            .then(about => dispatch(setAbout(about)));
     };
 };
 
@@ -153,5 +154,12 @@ export const deleteNew = (idx) => {
             })
         })
             .then(() => dispatch(fetchNewsFromServer()));
+    };
+};
+
+export const setEditorState = (editorState) => {
+    return {
+        type: 'RELOAD_EDITOR_STATE',
+        editorState
     };
 };
