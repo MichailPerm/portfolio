@@ -24,7 +24,7 @@ const styles = theme => ({
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         width: '60%',
-        margin: 'auto',
+        margin: '15px auto',
         position: 'relative',
     },
     grow: {
