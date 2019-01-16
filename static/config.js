@@ -1,5 +1,5 @@
 export const config = {
-    'config': 'debug',
+    'config': 'release',
     'dev_server': {
         'protocol': 'http',
         'name': 'localhost',
