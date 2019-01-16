@@ -50,6 +50,7 @@ export const fetchNewsFromServer = () => {
                 dispatch(newsFetching(false));
                 dispatch(newsError(false));
                 dispatch(newsSuccess(JSON.parse(news)));
+                dispatch(dropAnchor());
             })
             .catch(dispatch(newsError(true)));
     };
@@ -65,7 +66,6 @@ export const postNews = (newAuthor, newTitle, newText) => {
             dispatch(postNewError());
             return;
         }
-        console.log(newText);
         fetch(post_url, {
             method: 'POST',
             headers: {
@@ -159,5 +159,18 @@ export const setEditorState = (editorState) => {
     return {
         type: 'RELOAD_EDITOR_STATE',
         editorState
+    };
+};
+
+export const setAnchor = (event) => {
+    return {
+        type: 'SET_ANCHOR',
+        event
+    };
+};
+
+export const dropAnchor = () => {
+    return {
+        type: 'DROP_ANCHOR',
     };
 };
