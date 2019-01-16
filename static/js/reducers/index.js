@@ -13,6 +13,17 @@ const editorState = (state={}, action) => {
     return state;
 };
 
+const anchorEl = (state={}, action) => {
+    switch (action.type) {
+        case 'SET_ANCHOR':
+            return action.event.currentTarget;
+        case 'DROP_ANCHOR':
+            return null;
+        default:
+            return state;
+    }
+};
+
 const RootReducer = combineReducers({
     News,
     newsFetching,
@@ -20,6 +31,7 @@ const RootReducer = combineReducers({
     account,
     accountError,
     editorState,
+    anchorEl,
     about
 });
 

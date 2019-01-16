@@ -2,14 +2,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
 
-import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken, setEditorState } from '../actions/';
+import { fetchNewsFromServer, postNews, sendAuthRequest, getAbout, deleteNew, dropToken, setEditorState, setAnchor, dropAnchor } from '../actions/';
 import Header from '../components/nav/header';
 import News from '../components/pages/news.js';
 import Admin from '../components/pages/admin.js';
 import Login from '../components/pages/login.js';
 import About from '../components/pages/about';
 import Portfolio from '../components/pages/portfolio';
+
+const styles = {
+    root: {
+        flexGrow: 1,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
+    },
+};
 
 class App extends React.Component {
     componentDidMount() {
@@ -22,7 +36,11 @@ class App extends React.Component {
                 <Header fetchNewsFromServer={this.props.fetchNewsFromServer}
                     getAbout={this.props.getAbout}
                     dropToken={this.props.dropToken}
-                    token={this.props.account.access_token}/>
+                    token={this.props.account.access_token}
+                    setAnchor={this.props.setAnchor}
+                    dropAnchor={this.props.dropAnchor}
+                    anchorEl={this.props.anchorEl}
+                    classes={this.props.classes}/>
                 <Route exact path="/" render={() => (
                     this.props.newsFetching ? (
                         <h4>News Loading</h4>
@@ -76,7 +94,8 @@ const mapStateToProps = (state) => {
         newsFetching: state.newsFetching,
         newsError: state.newsError,
         account: state.account,
-        editorState: state.editorState
+        editorState: state.editorState,
+        anchorEl: state.anchorEl
     };
 };
 
@@ -88,8 +107,10 @@ const mapDispatchToProps = dispatch => {
         getAbout: () => dispatch(getAbout()),
         deleteNew: (newId) => dispatch(deleteNew(newId)),
         dropToken: () => dispatch(dropToken()),
-        setEditorState: (editorState) => dispatch(setEditorState(editorState))
+        setEditorState: (editorState) => dispatch(setEditorState(editorState)),
+        setAnchor: (bool) => dispatch(setAnchor(bool)),
+        dropAnchor: () => dispatch(dropAnchor())
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App))));

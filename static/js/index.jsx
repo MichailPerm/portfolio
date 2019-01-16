@@ -17,7 +17,8 @@ const initialState = {
     newsError: false,
     about: {},
     account: {},
-    editorState: EditorState.createEmpty()
+    editorState: EditorState.createEmpty(),
+    anchorEl: null,
 };
 
 const store = createStore(
