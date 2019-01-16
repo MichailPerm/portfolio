@@ -12,9 +12,20 @@ import Login from '../components/pages/login.js';
 import About from '../components/pages/about';
 import Portfolio from '../components/pages/portfolio';
 
-const styles = {
+const styles = theme => ({
     root: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
         flexGrow: 1,
+    },
+    paper: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+        width: '60%',
+        margin: 'auto',
+        position: 'relative',
     },
     grow: {
         flexGrow: 1,
@@ -23,7 +34,7 @@ const styles = {
         marginLeft: -12,
         marginRight: 20,
     },
-};
+});
 
 class App extends React.Component {
     componentDidMount() {
@@ -54,7 +65,8 @@ class App extends React.Component {
                 )}/>
                 <Route path="/newsGet" render={props => (
                     <News {...props}
-                        News={this.props.News}/>
+                        News={this.props.News}
+                        classes={this.props.classes}/>
                 )}/>
                 <Route path="/admin" render={props => (
                     this.props.account.access_token ? (

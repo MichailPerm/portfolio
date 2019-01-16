@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Markup } from 'interweave';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 
 const Box = styled.div`
     &:before {
@@ -91,9 +93,9 @@ const Header4 = styled.h3`
 `;
 
 const DateDiv = styled.div`
-    position: absolute;
+    position: inherit;
     left: 10px;
-    bottom: 5px;
+    bottom: 6px;
     float: left;
     width: fit-content;
     display: block;
@@ -103,22 +105,21 @@ const AnnotDiv = styled.div`
     position: inherit;
     right: 10px;
     bottom: 5px;
+    float: right;
     width: fit-content;
-    margin-left: auto;
     display: block;
 `;
 
 const News = (props) => {
-    const { News } = props;
+    const { News, classes } = props;
     return (
         <div>
             {News.map((newsElement) =>
-                <Box key = {newsElement.id}>
-                    <Header4>{newsElement.title}</Header4>
-                    <Paragraph><Markup content={newsElement.text} /></Paragraph>
-                    <AnnotDiv>{newsElement.author}</AnnotDiv>
-                    <DateDiv>{newsElement.date}</DateDiv>
-                </Box>
+                <Paper className={classes.paper} elevation={2} key={newsElement.id}>
+                    <Typography variant="h5" component="h4">{newsElement.title}</Typography>
+                    <Typography component="article"><Markup content={newsElement.text}/></Typography>
+                    <Typography component="p" color="textSecondary">{newsElement.author}, {newsElement.date}</Typography>
+                </Paper>
             )}
         </div>
     );
