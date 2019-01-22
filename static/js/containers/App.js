@@ -23,9 +23,12 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
-        width: '60%',
-        margin: 'auto',
+        //width: '60%',
+        // margin: '15px 36%',
         position: 'relative',
+    },
+    grid: {
+        flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
@@ -34,6 +37,15 @@ const styles = theme => ({
         marginLeft: -12,
         marginRight: 20,
     },
+    banner: {
+        ...theme.mixins.gutters(),
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center'
+    },
+    container: {
+        width: '60%',
+        margin: '15px auto',
+    }
 });
 
 class App extends React.Component {
