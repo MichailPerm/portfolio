@@ -73,12 +73,16 @@ def index():
 def requestNews():
     news = News.query.order_by(News.id.desc()).all()
     news_str = str(news)
+    print(1, news_str)
     news_str = news_str.replace("=\"", "='")
     news_str = news_str.replace("\" ", "' ")
+    news_str = news_str.replace(" \"", " '")
     news_str = news_str.replace("\">", "'>")
     news_str = news_str.replace(": '", ": \"")
     news_str = news_str.replace("',", "\",")
+    news_str = news_str.replace(", '", ", \"")
     news_str = news_str.replace("'}", "\"}")
+    print(2, news_str)
     return jsonify(news_str)
 
 @app.route("/newsGet")

@@ -24,8 +24,8 @@ const News = (props) => {
                     </Paper>
                 </Grid>
                 {News.map((newsElement) =>
-                    <Grid item xs={12}>
-                        <Paper className={classes.paper} elevation={2} key={newsElement.id}>
+                    <Grid item xs={12} key={newsElement.id}>
+                        <Paper className={classes.paper} elevation={2}>
                             <Typography variant="h5" component="h4">{newsElement.title}</Typography>
                             <Typography component="article"><Markup content={newsElement.text}/></Typography>
                             <Typography component="p" color="textSecondary">{newsElement.author}, {newsElement.date}</Typography>
